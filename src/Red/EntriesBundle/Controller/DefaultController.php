@@ -121,6 +121,6 @@ class DefaultController extends BaseController
 
     public function testAction()
     {
-        return $this->render('EntriesBundle:Default:index.html.twig', []);
+        return $this->render('EntriesBundle:Default:index.html.twig', ['title' => 'Redkop, lorem ipsum']);
     }
 }
