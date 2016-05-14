@@ -11,7 +11,7 @@ namespace ContentBundle\DataFixtures\ORM;
 use ChannelBundle\Entity\Channel;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Proxies\__CG__\ContentBundle\Entity\Content;
+use ContentBundle\Entity\Content;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
