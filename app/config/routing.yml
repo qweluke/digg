@@ -14,7 +14,7 @@ fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
 
 user:
-    resource: UserBundle\Controller\DefaultController
+    resource: '@UserBundle/Resources/config/route.yml'
     type:     rest
     prefix:   /api/user
 

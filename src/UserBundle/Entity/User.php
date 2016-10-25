@@ -32,7 +32,7 @@ class User extends BaseUser
      * @ORM\Column(type="integer", options={"unsigned"=true})
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
-     * @JMS\Groups({"mod","admin"})
+     * @JMS\Groups({"user","mod","admin"})
      */
     protected $id;
 
@@ -75,7 +75,7 @@ class User extends BaseUser
      * Contains user email. Visible only to administrator.
      *
      * @Expose
-     * @JMS\Groups({"admin"})
+     * @JMS\Groups({"user","mod","admin"})
      */
     protected $email;
 }

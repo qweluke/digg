@@ -3,3 +3,7 @@ services:
     user_bundle.user:
         class:     UserBundle\Service\UserService
         arguments: ['@security.token_storage', '@security.authorization_checker']
+
+    myproject_user.user_service:
+        class: UserBundle\Handler\UserHandler
+        arguments: [ "@doctrine.orm.entity_manager", "@service_container", '%fos_user.model.user.class%']

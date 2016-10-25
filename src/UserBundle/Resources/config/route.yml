@@ -1,0 +1,9 @@
+user:
+    resource: UserBundle\Controller\DefaultController
+    type:     rest
+    prefix:   /
+
+user_security:
+    resource: UserBundle\Controller\SecurityController
+    type:     rest
+    prefix:   /security

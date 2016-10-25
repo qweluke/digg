@@ -148,9 +148,8 @@ class ContentController extends Controller
             $view
                 ->setStatusCode(Codes::HTTP_BAD_REQUEST)
                 ->setTemplateVar('error')
-                ->setData($this->get('validator')->validate($content))
-                ->setTemplateData(['message' => $form->getErrors(true)])
-                ->setTemplate('ContentBundle:content:show.html.twig');
+                ->setData((string) $form->getErrors(true, false))
+                ->setTemplate('ContentBundle:content:error.html.twig');
         }
 
         return $this->get('fos_rest.view_handler')->handle($view);

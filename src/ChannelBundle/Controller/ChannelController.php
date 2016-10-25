@@ -10,6 +10,7 @@ use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
 use CoreBundle\Controller\BaseController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -193,6 +194,8 @@ class ChannelController extends BaseController
      *   "groups"={"user","mod","admin"}
      *  }
      * )
+     *
+     * @Security("has_role('ROLE_MODERATOR')")
      * @return View
      */
     public function editAction(Request $request, Channel $channel)
@@ -239,14 +242,16 @@ class ChannelController extends BaseController
      * )
      *
      * @Rest\View(serializerGroups={"user","mod","admin"})
-     * @param Channel $channel
-     * @return View
-     * @throws \NotFoundHttpException*
      *
      * @ApiDoc(
      *  resource="/api/channels/",
      *  description="Deletes content"
      * )
+     * @Security("has_role('ROLE_MODERATOR')")
+     *
+     * @param Request $request
+     * @param Channel $channel
+     * @return View
      */
     public function deleteAction(Request $request, Channel $channel)
     {

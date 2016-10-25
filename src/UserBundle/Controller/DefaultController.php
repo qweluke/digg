@@ -46,11 +46,13 @@ class DefaultController extends Controller
 
         $users = $em->getRepository('UserBundle:User')->findAll();
 
+        $groups = $this->get('user_bundle.user')->getGrantedAPIGroups();
+
         $view = View::create()
             ->setStatusCode(Codes::HTTP_OK)
             ->setTemplate("UserBundle:Default:index.html.twig")
             ->setTemplateVar('users')
-            ->setSerializationContext(SerializationContext::create()->setGroups(['user']))
+            ->setSerializationContext(SerializationContext::create()->setGroups($groups))
             ->setData($users);
 
         return $this->get('fos_rest.view_handler')->handle($view);
@@ -83,15 +85,19 @@ class DefaultController extends Controller
      */
     public function newAction(Request $request)
     {
+        $groups = $this->get('user_bundle.user')->getGrantedAPIGroups();
+
         $user = new User();
         $form = $this->createForm('UserBundle\Form\UserType', $user);
         $form->submit($request->request->all());
 
         $view = View::create()
-            ->setSerializationContext(SerializationContext::create()->setGroups(['user']));
+            ->setSerializationContext(SerializationContext::create()->setGroups($groups));
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $user->addRole('ROLE_API');
             $em->persist($user);
             $em->flush();
 
@@ -137,9 +143,11 @@ class DefaultController extends Controller
      */
     public function showAction(User $user)
     {
+        $groups = $this->get('user_bundle.user')->getGrantedAPIGroups();
+
         $view = View::create()
             ->setStatusCode(Codes::HTTP_OK)
-            ->setSerializationContext(SerializationContext::create()->setGroups(['user']))
+            ->setSerializationContext(SerializationContext::create()->setGroups($groups))
             ->setTemplate("UserBundle:Default:show.html.twig")
             ->setTemplateVar('user')
             ->setData($user);
@@ -180,11 +188,13 @@ class DefaultController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
+        $groups = $this->get('user_bundle.user')->getGrantedAPIGroups();
+
         $editForm = $this->createForm('UserBundle\Form\UserType', $user);
         $editForm->submit($request->request->all(), false);
 
         $view = View::create()
-            ->setSerializationContext(SerializationContext::create()->setGroups(['user']));
+            ->setSerializationContext(SerializationContext::create()->setGroups($groups));
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -229,11 +239,13 @@ class DefaultController extends Controller
      */
     public function deleteAction(Request $request, User $user)
     {
+        $groups = $this->get('user_bundle.user')->getGrantedAPIGroups();
+
         $form = $this->createFormBuilder()->setMethod('DELETE')->getForm();
         $form->submit($request->request->get($form->getName()));
 
         $view = View::create()
-            ->setSerializationContext(SerializationContext::create()->setGroups(['user']));
+            ->setSerializationContext(SerializationContext::create()->setGroups($groups));
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
