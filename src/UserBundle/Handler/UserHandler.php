@@ -16,24 +16,17 @@ use UserBundle\Entity\User;
 
 class UserHandler implements UserHandlerInterface
 {
-    private $om;
-    private $entityClass;
-    private $repository;
     private $container;
     private $manager;
 
-    public function __construct(ObjectManager $om, Container $container, $entityClass)
+    public function __construct(ContainerInterface $container, $entityClass)
     {
-        $this->om = $om;
-        $this->entityClass = $entityClass;
-        $this->repository = $this->om->getRepository($this->entityClass);
         $this->container = $container;
         $this->manager = $this->container->get('fos_user.user_manager');
     }
 
     public function login($username, $password)
     {
-        $jsonErrorCreator = $this->container->get('myproject_api.create_error_json');
         $code = 0;
 
         // check the arguments here.
@@ -47,28 +40,36 @@ class UserHandler implements UserHandlerInterface
         if ($user === null) {
             $code = 224;
 
-            return ($jsonErrorCreator->createErrorJson($code, $username));
+            return new JsonResponse([
+                'code' => $code,
+                'username' => $username
+            ]);
         }
 
         // check the user password
         if ($this->checkUserPassword($user, $password) === false) {
             $code = 225;
 
-            return ($jsonErrorCreator->createErrorJson($code, null));
+            return new JsonResponse([
+                'code' => $code,
+                'username' => null
+            ]);
         }
 
         // log the user
         $this->loginUser($user);
 
-        $jsonCreator = $this->container->get('myproject_api.create_json');
-        $response = $jsonCreator->createJson(array('success' => true, 'user' => $user));
 
-        return $response;
+        return new JsonResponse([
+            'success' => true,
+            'username' => $user
+        ]);
+
     }
 
     protected function loginUser(User $user)
     {
-        $security = $this->container->get('security.context');
+        $security = $this->container->get('security.token_storage');
         $providerKey = $this->container->getParameter('fos_user.firewall_name');
         $roles = $user->getRoles();
         $token = new UsernamePasswordToken($user, null, $providerKey, $roles);

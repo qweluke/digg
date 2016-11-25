@@ -6,4 +6,4 @@ services:
 
     myproject_user.user_service:
         class: UserBundle\Handler\UserHandler
-        arguments: [ "@doctrine.orm.entity_manager", "@service_container", '%fos_user.model.user.class%']
+        arguments: ["@service_container", '%fos_user.model.user.class%']
