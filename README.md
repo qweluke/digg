@@ -4,6 +4,7 @@ RedDigg
 Simple social media website. (digg/reddit mimick)
 
 This example uses:
+- Symfony3
 - FOSUserBundle
 - FOSOAuthBundle
 - FOSRESTBundle
@@ -25,3 +26,6 @@ How to start:
 1. clone/fork repository
 2. Setting up Permissions
 3. start using! ;-)
+
+
+Please note: this is only a server, you need your client to use it.
