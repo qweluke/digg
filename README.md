@@ -3,6 +3,13 @@ RedDigg
 
 Simple social media website. (digg/reddit mimick)
 
+This example uses:
+- FOSUserBundle
+- FOSOAuthBundle
+- FOSRESTBundle
+- Nelmio API DOC (for documentation)
+- JMSSerializer
+
 What you can:
 
 1. Creating channels / tags
