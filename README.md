@@ -10,6 +10,9 @@ This example uses:
 - Nelmio API DOC (for documentation)
 - JMSSerializer
 
+Requirements:
+- PHP 7
+
 What you can:
 
 1. Creating channels / tags
